@@ -1,8 +1,10 @@
+include("solutions.jl")
+include("costs.jl")
 
 # Reads a csv file containing stoichiometric matrix for a metabolic network
 # Returns parsed matrix, as well as one list of reaction ids and one for metabolite ids.
 function parse_matrix(csv_source_file::AbstractString)   
-    network = None
+    network = Union{} # None type is deprecated because fuck code legibility
     reactions = AbstractString[]
     metabolites = AbstractString[]
      
@@ -49,8 +51,8 @@ end
 # Where S is the stoichiometry matrix and v is the flux vector we want to maximize.
 # c represents the objective function, which transforms v into a biomass number.
 function parse_objective(csv_source_file::AbstractString)
-    c = None    
-    open (csv_source_file) do f
+    c = Union{}    
+    open(csv_source_file) do f
         lines = readlines(f)
         for l in lines
             words = split(l, ",")
@@ -69,8 +71,8 @@ end
 # Each row corresponds to values for each metabolite; the first column has the
 # minimums and the second the maximums.
 function parse_constraints(csv_source_file::AbstractString)
-    c = None    
-    open (csv_source_file) do f
+    c = Union{}    
+    open(csv_source_file) do f
         lines = readlines(f)
         c = fill(0.0, (length(lines)-1, 2))
         firstline = true
@@ -81,9 +83,10 @@ function parse_constraints(csv_source_file::AbstractString)
                 continue
             end
             
-            words = split(l, ",")
-            c[i][1] = parse(Float64, words[2])
-            c[i][2] = parse(Float64, words[3])
+            words = split(rstrip(l), ",")
+            
+            c[i] = parse(Float64, words[2])
+            c[i+length(lines)-1] = parse(Float64, words[3])
             i+=1
         end
     end

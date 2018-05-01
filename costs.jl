@@ -23,7 +23,7 @@ function count_constraints_fails(v::Array{Float64,2}, cons::Array{Float64,2})
     i = 1
     count = 0
     for x in v
-        if x < constraints[i,1] || x > cons[i,2]
+        if x < cons[i,1] || x > cons[i,2]
             count += 1
         end
         i+=1
@@ -33,5 +33,5 @@ end
 
 # The cost function is simply biomass, which is given by the dot product v(dot)c
 function cost(v::Array{Float64,2}, c::Array{Float64,2}, cons::Array{Float64,2}, pun::Float64)
-    dot(v[:],c[:]) + pun * count_constraints_fails(v,cons)
+    dot(v[:],c[:]) - pun * count_constraints_fails(v,cons)
 end

@@ -1,7 +1,8 @@
 # Generates a random solution within the given constraints for elements of v.
 function random_solution(cons::Array{Float64,2})
-    v = fill(0.0, (length(cons)/2, 1))
-    for i in 1:length(cons)
+    vlen = convert(Int, floor(length(cons)/2))
+    v = fill(0.0, (vlen, 1))
+    for i in 1:vlen
         v[i] = rand(cons[i,1]:cons[i,2])
     end
     v

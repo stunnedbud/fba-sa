@@ -1,0 +1,26 @@
+#Settings file. Keep names intact, use no spaces between =. 
+#Order of lines doesn't matter, you can comment out a line with '#'.
+
+#Master seed. Change it every new set of runs if you don't want to overwrite results.
+seed=2
+
+#Data files 
+network_source_file=sources/ecoli_core_model.csv
+objective_source_file=sources/objective.csv
+constraints_source_file=sources/constraints.csv
+
+#Tuners
+#Lot size
+L=500
+#Initial temperature
+T=10.0
+#Inferior limit for temperature
+epsilon=0.01
+#Cooling factor (Float64 between 0 and 1)
+theta=0.99
+#Punishment
+punishment=5.0
+
+#Number of runs desired
+runs=100
+
