@@ -81,7 +81,7 @@ function run(settings_file::UTF8String)
         out = "Run #"*string(i)*"\n"
         out *= "Seed: "
         out *= string(current_seed)*"\n"
-        out *= "Initial flux vector: "
+        out *= "Initial flux vector ["*string(feasible(v, S, cons))*", "*string(stability_sum(v,S))*"] ("*string(cost(v, S, c, cons, pun))*"): "
         for j in v
             out *= string(j)*","
         end
@@ -91,17 +91,17 @@ function run(settings_file::UTF8String)
         last, best = acceptance_by_thresholds(S, v, c, cons, parse(Float64,utf8(settings["T"])), parse(Int,utf8(settings["L"])), parse(Float64,utf8(settings["epsilon"])), parse(Float64,utf8(settings["theta"])), pun, current_seed)
         
         # Update absolute best found
-        if cost(best, c, cons, pun) > cost(abs_best, c, cons, pun)
+        if cost(best, S, c, cons, pun) > cost(abs_best, S, c, cons, pun)
             abs_best = best
             best_run = i
         end
         
-        out *= "Last ["*string(feasible(last, S, cons))*"] ("*string(cost(last, c, cons, pun))*"): "
+        out *= "Last ["*string(feasible(last, S, cons))*", "*string(stability_sum(last,S))*"] ("*string(cost(last, S, c, cons, pun))*"): "
         for j in last
             out *= string(j)*","
         end
         out = out[1:end-1]*"\n" # removes last comma
-        out *= "Best ["*string(feasible(best, S, cons))*"] ("*string(cost(best, c, cons, pun))*"): "
+        out *= "Best ["*string(feasible(best, S, cons))*", "*string(stability_sum(best,S))*"] ("*string(cost(best, S, c, cons, pun))*"): "
         for j in best
             out *= string(j)*","
         end
@@ -121,7 +121,8 @@ function run(settings_file::UTF8String)
         out *= string(j)*","
     end
     out = out[1:end-1]*"\n" # removes last comma
-    out *= "With biomass "*string(cost(abs_best, c, cons, pun))*"\n"
+    out *= "With biomass "*string(cost(abs_best, S, c, cons, pun))*"\n"
+    out *= "Feasible? ["*string(feasible(abs_best, S, cons))*", "*string(stability_sum(abs_best,S))*"]\n"
     out *= "From run #"*string(best_run)*"\n"
 
     open("results/"*string(master_seed)*".txt","a") do f

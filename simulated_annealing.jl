@@ -3,17 +3,17 @@ include("metabolic_network.jl")
 function calc_lot(m::Array{Float64,2}, v::Array{Float64,2}, c::Array{Float64,2}, cons::Array{Float64,2}, T::Float64, L::Int, pun::Float64, plot_name::Int)
     v1 = v
     best = v
-    cost_best = cost(v, c, cons, pun)
+    cost_best = cost(v, m, c, cons, pun)
     accepted_costs = [cost_best]
     count = 0
     attempts = 0
     max_attempts = L^2
-    cost_v1 = cost(v1, c, cons, pun)
+    cost_v1 = cost(v1, m, c, cons, pun)
     while count < L
         attempts += 1
-        cost_v1 = cost(v1, c, cons, pun)
-        v2 = neighbor(v1)
-        cost_v2 = cost(v2, c, cons, pun)
+        cost_v1 = cost(v1, m, c, cons, pun)
+        v2 = neighbor(v1,cons)
+        cost_v2 = cost(v2, m, c, cons, pun)
         if cost_v2 >= cost_v1 - T # accepts solution
             v1 = v2
             cost_v1 = cost_v2
@@ -62,7 +62,7 @@ function acceptance_by_thresholds(m::Array{Float64,2}, v::Array{Float64,2}, c::A
             q = p
             p, v, b, f = calc_lot(m, v, c, cons, T, L, pun, plot_name)    
 
-            if cost(b,c,cons,pun) > cost(abs_b,c,cons,pun)
+            if cost(b,m,c,cons,pun) > cost(abs_b,m,c,cons,pun)
                 abs_b = b
             end
             

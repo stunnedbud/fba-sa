@@ -8,14 +8,23 @@ function random_solution(cons::Array{Float64,2})
     v
 end
 
-# Adds/subtracts 1 to a random element of v. Returns new array.
-function neighbor(v::Array{Float64,2})
+# Adds/subtracts 1 to a random element of v, staying within the given constraints. 
+# Returns new array.
+function neighbor(v::Array{Float64,2}, cons::Array{Float64,2})
     i = rand(1:length(v))
     u = copy(v)
     if rand() > 0.5 
-        u[i] += 1
+        if u[i] + 1 > cons[i,2]
+            u[i] -= 1
+        else
+            u[i] += 1
+        end
     else
-        u[i] -= 1
+        if u[i] -1 < cons[i,1]
+            u[i] += 1
+        else
+            u[i] -= 1
+        end
     end
     u
 end
