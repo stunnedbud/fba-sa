@@ -1,8 +1,8 @@
-#Settings file. Keep names intact, use no spaces between =. 
+#Settings file for a good run. Keep names intact, use no spaces between =. 
 #Order of lines doesn't matter, you can comment out a line with '#'.
 
 #Master seed. Change it every new set of runs if you don't want to overwrite results.
-seed=62
+seed=32494161
 
 #Data files 
 network_source_file=sources/ecoli_core_model.csv
@@ -35,4 +35,4 @@ initial_range=1
 initial_solution_range=1
 
 #Number of runs desired
-runs=20
+runs=1

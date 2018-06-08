@@ -10,10 +10,10 @@ include("$(Pkg.dir("COBRA"))/config/solverCfg.jl")
 solver = changeCobraSolver("Clp", [])
 
 # Load the stoichiometric matrix S from a MATLAB structure named model in the specified .mat file
-model = loadModel("sources/ecoli_core_model.mat", "S", "model");
+#model = loadModel("sources/ecoli_core_model.mat", "S", "model");
 
-# TO DO: get the script running using this file, the regulated model (ie. with all constraints?)
-#model = loadModel("sources/modelReg.mat", "S", "model");
+# TO DO: get the script running using this file, the regulated model ie. with all constraints?
+model = loadModel("sources/modelReg.mat", "S", "modelReg");
 
 # set the reaction list (only one reaction)
 rxnsList = 13

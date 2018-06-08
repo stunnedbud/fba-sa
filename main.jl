@@ -1,4 +1,4 @@
-include("./run.jl")
+include("run_heuristic.jl")
 using Run
 
 function main()

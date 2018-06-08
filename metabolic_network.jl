@@ -15,7 +15,7 @@ function parse_matrix(csv_source_file::AbstractString)
         for l in lines
             if firstline # first line contains column headers (ie. reaction ids)
                 words = split(l, ",")
-                words = map(utf8, words)
+               # words = map(utf8, words)
                 for w in words
                     if firstline # skips first word
                         firstline = false
